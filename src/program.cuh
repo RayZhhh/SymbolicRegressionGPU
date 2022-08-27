@@ -36,7 +36,6 @@ namespace cusr {
          */
         Program crossover_mutation(Program &parent, Program &donor);
 
-
         /**
          * mutate a node of the program correspond to its type
          * unary function --> unary function
@@ -52,7 +51,6 @@ namespace cusr {
         Program
         point_mutation(Program &program, vector<Function> &function_set, pair<float, float> &range, int variable_num);
 
-
         /**
          * hoist mutation
          * select subtree A from a program, subtree B from A, replace A from B
@@ -60,7 +58,6 @@ namespace cusr {
          * @return
          */
         Program hoist_mutation(Program &program);
-
 
         /**
          * do point replace mutation for a program
@@ -70,7 +67,6 @@ namespace cusr {
          */
         Program point_replace_mutation(Program &program, vector<Function> &function_set, pair<float, float> &range,
                                        int variable_num);
-
 
         /**
          * do subtree mutation for a parent tree
@@ -83,7 +79,6 @@ namespace cusr {
          */
         Program subtree_mutation(Program &program, int depth_of_rand_tree,
                                  pair<float, float> &range, vector<Function> &func_set, int variable_num);
-
 
         /**
          * evaluation fitness for a single program on the CPU
@@ -99,7 +94,6 @@ namespace cusr {
                               int data_size,
                               metric_t metric);
 
-
         /**
          * tournament selection performed on the CPU
          *
@@ -107,7 +101,6 @@ namespace cusr {
          * @param tournament_size
          */
         int tournament_selection_cpu(vector<Program> &population, int tournament_size, float parsimony_coefficient);
-
 
         /**
          * generate a full-tree as an expression tree
@@ -120,7 +113,6 @@ namespace cusr {
          */
         Program *
         gen_full_init_program(int depth, pair<float, float> &range, vector<Function> &func_set, int variable_num);
-
 
         /**
          * generate a growth-tree as an expression tree

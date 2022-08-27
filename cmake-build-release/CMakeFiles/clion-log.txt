@@ -1,0 +1,56 @@
+"C:\Program Files\JetBrains\CLion 2021.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2021.3/bin/ninja/win/ninja.exe" -G Ninja D:\cusr
+-- The CUDA compiler identification is NVIDIA 11.5.119
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - failed
+-- Check for working CUDA compiler: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.5/bin/nvcc.exe
+-- Check for working CUDA compiler: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.5/bin/nvcc.exe - broken
+CMake Error at C:/Program Files/JetBrains/CLion 2021.3/bin/cmake/win/share/cmake-3.21/Modules/CMakeTestCUDACompiler.cmake:56 (message):
+  The CUDA compiler
+
+    "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.5/bin/nvcc.exe"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: D:/cusr/cmake-build-release/CMakeFiles/CMakeTmp
+    
+    Run Build Command(s):C:/Program Files/JetBrains/CLion 2021.3/bin/ninja/win/ninja.exe cmTC_61e87 && [1/2] Building CUDA object CMakeFiles\cmTC_61e87.dir\main.cu.obj
+    main.cu
+    [2/2] Linking CUDA executable cmTC_61e87.exe
+    FAILED: cmTC_61e87.exe 
+    cmd.exe /C "cd . && "C:\Program Files\JetBrains\CLion 2021.3\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_61e87.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- C:\PROGRA~2\MICROS~3\2019\PROFES~1\VC\Tools\MSVC\1429~1.301\bin\Hostx64\x64\link.exe /nologo CMakeFiles\cmTC_61e87.dir\main.cu.obj  /out:cmTC_61e87.exe /implib:cmTC_61e87.lib /pdb:cmTC_61e87.pdb /version:0.0 /debug /INCREMENTAL  cudadevrt.lib  cudart_static.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib -LIBPATH:"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.5/lib/x64"  && cd ."
+    RC Pass 1: command "rc /fo CMakeFiles\cmTC_61e87.dir/manifest.res CMakeFiles\cmTC_61e87.dir/manifest.rc" failed (exit code 0) with the following output:
+    绯荤粺鎵句笉鍒版寚瀹氱殑鏂囦欢銆�
+    ninja: build stopped: subcommand failed.
+    
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:2 (project)
+
+
+-- Configuring incomplete, errors occurred!
+See also "D:/cusr/cmake-build-release/CMakeFiles/CMakeOutput.log".
+See also "D:/cusr/cmake-build-release/CMakeFiles/CMakeError.log".
+
+Cannot get compiler information:
+	Compiler exited with error code 2: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\cl.exe" @C:\Users\Derek\AppData\Local\Temp\response-file5223547150546609671 C:\Users\Derek\AppData\Local\Temp\compiler-file11379548269946067301 | @response-file5223547150546609671=/TP /std:c++14 -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -nologo -E -TP -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__ /EHsc -O2 -Ob2 -MD "-IC:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.5\bin/../include" -D _WINDOWS -D NDEBUG -D__CUDACC_VER_MAJOR__=11 -D__CUDACC_VER_MINOR__=5 -D__CUDACC_VER_BUILD__=119 -D__CUDA_API_VER_MAJOR__=11 -D__CUDA_API_VER_MINOR__=5 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -FI cuda_runtime.h -EHsc /Be /Bd /EP
+	all:
+		@cd D:\cusr\cmake-build-release
+		@set INCLUDE=
+		@set LIB=
+		@set CL=
+		@set _CL_=
+		@set LINK=
+		C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\cl.exe @<< C:\Users\Derek\AppData\Local\Temp\compiler-file11379548269946067301
+	/TP /std:c++14 -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -nologo -E -TP -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__ /EHsc -O2 -Ob2 -MD "-IC:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.5\bin/../include" -D _WINDOWS -D NDEBUG -D__CUDACC_VER_MAJOR__=11 -D__CUDACC_VER_MINOR__=5 -D__CUDACC_VER_BUILD__=119 -D__CUDA_API_VER_MAJOR__=11 -D__CUDA_API_VER_MINOR__=5 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -FI cuda_runtime.h -EHsc /Be /Bd /EP<<
+	
+	compiler-file11379548269946067301
+	`C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\c1xx.dll -zm0x00007FF76F2BFC60 -il C:\Users\Derek\AppData\Local\Temp\_CL_563ada4e -typedil -f C:\Users\Derek\AppData\Local\Temp\compiler-file11379548269946067301 -W 1 -Ze -D_MSC_EXTENSIONS -Zp16 -Focompiler-file11379548269946067301.obj -pc \:/ -Fdvc140.pdb -D_MSC_VER=1929 -D_MSC_FULL_VER=192930137 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GS -GR -D_CPPRTTI -Zc:forScope -Zc:wchar_t -std:c++14 -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -nologo -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__ -GF -Og -Oi -Ot -Oy -MD -D_MT -D_DLL -I C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.5\bin/../include -D_WINDOWS -DNDEBUG -D__CUDACC_VER_MAJOR__=11 -D__CUDACC_VER_MINOR__=5 -D__CUDACC_VER_BUILD__=119 -D__CUDA_API_VER_MAJOR__=11 -D__CUDA_API_VER_MINOR__=5 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -FI cuda_runtime.h -EHs -D_CPPUNWIND -EHc -Bd -E -EP'
+	C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.5\include\crt/host_config.h(238): fatal error C1083: 鏃犳硶鎵撳紑鍖呮嫭鏂囦欢: 鈥渃rtdefs.h鈥�: No such file or directory
+	
+	

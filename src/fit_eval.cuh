@@ -13,18 +13,6 @@
 #define THREAD_PER_BLOCK 512
 #define MAX_PREFIX_LEN 2048
 #define DEPTH 18
-#define ADD_SIGN 0
-#define SUB_SIGN 1
-#define MUL_SIGN 2
-#define DIV_SIGN 3
-#define TAN_SIGN 4
-#define SIN_SIGN 5
-#define COS_SIGN 6
-#define LOG_SIGN 7
-#define MAX_SIGN 8
-#define MIN_SIGN 9
-#define INV_SIGN 10
-
 
 namespace cusr {
     namespace fit {
@@ -39,7 +27,6 @@ namespace cusr {
             float *label;
             int dataset_size;
         };
-
 
         /**
          * copy dataset from host side to device side
@@ -57,13 +44,11 @@ namespace cusr {
          */
         void copyDatasetAndLabel(GPUDataset *dsStruct, vector<vector<float>> &dataset, vector<float> &label);
 
-
         /**
          * free data structure on the device side.
          * @param dataset_struct
          */
         void freeDataSetAndLabel(GPUDataset *dataset_struct);
-
 
         /**
          * evaluate fitness for a population

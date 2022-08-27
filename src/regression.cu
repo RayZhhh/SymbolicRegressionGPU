@@ -11,6 +11,9 @@ namespace cusr {
         this->label = label;
         cusr::program::set_constant_prob(this->p_constant);
         do_fit_init();
+
+        clock_t iter_begin = clock();
+
         do_population_init();
         update_population_attributes();
 
@@ -24,7 +27,6 @@ namespace cusr {
                max_depth_in_population);
 
         int iter_times = 1;
-        clock_t iter_begin = clock();
 
         while (true) {
             gen_next_generation();
@@ -49,7 +51,6 @@ namespace cusr {
         }
     }
 
-
     void RegressionEngine::do_fit_init() {
         assert(!dataset.empty() && dataset.size() == label.size());
 
@@ -60,15 +61,18 @@ namespace cusr {
         }
     }
 
-
     void RegressionEngine::do_population_init() {
         this->population.clear();
+
+        // full initialize
         if (this->init_method == InitMethod::full) {
             for (int i = 0; i < population_size; i++) {
                 int depth = gen_rand_int(init_depth.first, init_depth.second);
                 this->population.emplace_back(*gen_full_init_program(depth, const_range, function_set, variable_nums));
             }
         }
+
+        // growth initialize
         if (this->init_method == InitMethod::growth) {
             for (int i = 0; i < population_size; i++) {
                 int depth = gen_rand_int(init_depth.first, init_depth.second);
@@ -76,14 +80,18 @@ namespace cusr {
                         *gen_growth_init_program(depth, const_range, function_set, variable_nums));
             }
         }
+
+        // ramped half and half
         if (this->init_method == InitMethod::half_and_half) {
             // assert(population_size >= 2);
             int full_size = population_size / 2;
             int growth_size = population_size - full_size;
+
             for (int i = 0; i < full_size; i++) {
                 int depth = gen_rand_int(init_depth.first, init_depth.second);
                 this->population.emplace_back(*gen_full_init_program(depth, const_range, function_set, variable_nums));
             }
+
             for (int i = 0; i < growth_size; i++) {
                 int depth = gen_rand_int(init_depth.first, init_depth.second);
                 this->population.emplace_back(
@@ -98,10 +106,11 @@ namespace cusr {
         }
     }
 
-
     Program RegressionEngine::do_mutation(Program &program) {
         Program ret;
+
         float rand_float = gen_rand_float(0, 1);
+
         if (rand_float < p_crossover) {
             int index = tournament_selection_cpu(population, tournament_size, parsimony_coefficient);
             ret = crossover_mutation(program, population[index]);
@@ -131,7 +140,6 @@ namespace cusr {
         return ret;
     }
 
-
     void RegressionEngine::gen_next_generation() {
         vector<Program> next_gen;
 
@@ -142,9 +150,10 @@ namespace cusr {
                 best_fitness_index = i;
             }
         }
+
         next_gen.emplace_back(population[best_fitness_index]);
 
-        // selection
+        // selection and do mutation
         for (int i = 1; i < population_size; i++) {
             int index = tournament_selection_cpu(population, tournament_size, parsimony_coefficient);
             next_gen.emplace_back(do_mutation(population[index]));
@@ -161,8 +170,8 @@ namespace cusr {
 
     }
 
-
     void RegressionEngine::update_population_attributes() {
+
         int best_fitness_index = 0;
         int max_prefix_length = 0;
         int max_prefix_depth = 0;
@@ -185,24 +194,20 @@ namespace cusr {
         this->best_program_in_each_gen.emplace_back(this->best_program);
     }
 
-
     void RegressionEngine::calculate_population_fitness_cpu() {
         for (int i = 0; i < population_size; i++) {
             calculate_fitness_cpu(&population[i], dataset, label, dataset.size(), this->metric);
         }
     }
 
-
     void RegressionEngine::calculate_population_fitness_gpu() {
         int blockNum = (dataset.size() - 1) / THREAD_PER_BLOCK + 1;
         calculatePopulationFitness(this->device_dataset, blockNum, population, this->metric);
     }
 
-
     void RegressionEngine::do_gpu_init() {
         copyDatasetAndLabel(&device_dataset, dataset, label);
     }
-
 
     RegressionEngine::~RegressionEngine() {
         freeDataSetAndLabel(&this->device_dataset);

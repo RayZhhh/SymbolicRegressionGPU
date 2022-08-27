@@ -15,20 +15,31 @@
 #define FUNCTION_WEIGHTS 0.9
 #define TERMINAL_WEIGHTS 0.1
 
-#define VARIABLE 'v'
-#define CONSTANT 'c'
-#define UNARY_FUNCTION 'u'
-#define BINARY_FUNCTION 'b'
-
 namespace cusr {
     namespace program {
 
         using namespace std;
 
-        typedef enum Function {
-            _add, _sub, _mul, _div, _tan, _sin, _cos, _log, _max, _min, _inv
-        } func_t;
+        typedef enum NodeType {
+            VAR,   // variable
+            CONST, // constant
+            UFUNC, // unary function
+            BFUNC  // binary function
+        } ntype_t;
 
+        typedef enum Function {
+            ADD, // arity: 2, return a + b
+            SUB, // arity: 2, return a - b
+            MUL, // arity: 2, return a * b
+            DIV, // arity: 2, if (b == 0) { b = DELTA } return a / b
+            TAN, // arity: 1, return tan a
+            SIN, // arity: 1, return sin a
+            COS, // arity: 1, return cos a
+            LOG, // arity: 1, return log a
+            MAX, // arity: 2, if (a > b) { return a } return b
+            MIN, // arity: 2, if (a < b) { return a } return b
+            INV  // arity: 1, if (a == 0) { a = DELTA } return 1 / a
+        } func_t;
 
         typedef enum InitMethod {
             half_and_half,
@@ -36,17 +47,14 @@ namespace cusr {
             full
         } init_t;
 
-
         struct Node {
-            char node_type;  // type of the node {'u', 'v', 'c', 'b'}
-            float constant;  // value of constant
-            int variable;    // the number of variable: x0 --> 0; x1 -->1
-            func_t function; // type of function
+            ntype_t node_type;  // type of the node
+            float constant;     // value of constant
+            int variable;       // the number of variable (e.g., 0 refers to x0; 1 refers to x1).
+            func_t function;    // type of function
         };
 
-
         typedef std::vector<Node> prefix_t;
-
 
         /**
          * random integer
@@ -57,7 +65,6 @@ namespace cusr {
          */
         int gen_rand_int(int loBound, int upBound);
 
-
         /**
          * random float
          *
@@ -67,7 +74,6 @@ namespace cusr {
          */
         float gen_rand_float(float loBound, float upBound);
 
-
         /**
          * returns the depth of a expression tree represented by a prefix
          *
@@ -76,7 +82,6 @@ namespace cusr {
          */
         int get_depth_of_prefix(prefix_t &prefix);
 
-
         /**
          * convert prefix to infix (for log only)
          *
@@ -84,17 +89,6 @@ namespace cusr {
          * @return
          */
         string prefix_to_infix(prefix_t &prefix);
-
-
-        /**
-         * get the index of a subtree
-         * returns the index {start pos, end_pos + 1} of the subtree
-         * @param prefix
-         * @param allow_terminal
-         * @return
-         */
-        pair<int, int> rand_subtree_index(prefix_t &prefix, bool allow_terminal);
-
 
         /**
          * get the index of a subtree
@@ -105,7 +99,6 @@ namespace cusr {
          */
         pair<int, int> rand_subtree_index_roulette(prefix_t &prefix, bool allow_terminal);
 
-
         /**
          * generate random constant terminal
          *
@@ -114,7 +107,6 @@ namespace cusr {
          */
         void rand_constant(Node &node, pair<float, float> &range);
 
-
         /**
          * generate random variable terminal
          *
@@ -122,7 +114,6 @@ namespace cusr {
          * @param variable_num
          */
         void rand_variable(Node &node, int variable_num);
-
 
         /**
          * generate random terminal (variable or constant)
@@ -134,7 +125,6 @@ namespace cusr {
          */
         void rand_terminal(Node &node, pair<float, float> &range, int variable_num, float p_constant);
 
-
         /**
          * generate random terminal (variable or constant), the probability to generate a constant is 50%
          *
@@ -144,7 +134,6 @@ namespace cusr {
          */
         void rand_terminal(Node &node, pair<float, float> &range, int variable_num);
 
-
         /**
          * generate random function
          *
@@ -153,7 +142,6 @@ namespace cusr {
          */
         void rand_function(Node &node, vector<Function> &function_set);
 
-
         struct TreeNode {
             TreeNode() : left(nullptr), right(nullptr) {}
 
@@ -161,7 +149,6 @@ namespace cusr {
             TreeNode *left;
             TreeNode *right;
         };
-
 
         /**
          * full initialization
@@ -175,7 +162,6 @@ namespace cusr {
         TreeNode *
         gen_full_init_tree(int depth, pair<float, float> &range, vector<Function> &func_set, int variable_num);
 
-
         /**
          * growth initialization
          *
@@ -188,7 +174,6 @@ namespace cusr {
         TreeNode *
         gen_growth_init_tree(int depth, pair<float, float> &range, vector<Function> &func_set, int variable_num);
 
-
         /**
          * convert an expression tree to a prefix
          *
@@ -196,7 +181,6 @@ namespace cusr {
          * @param tree_node
          */
         void get_init_prefix(prefix_t &prefix, TreeNode *tree_node);
-
 
         /**
          * convert a prefix to string (for printing it on the console)
@@ -207,16 +191,14 @@ namespace cusr {
          */
         string prefix_to_string(prefix_t &prefix);
 
-
         /**
          * find rand cutting point by roulette
          *
          * @param prefix
-         * @param allow_terminal: 允许terminal作为切割点
+         * @param allow_terminal
          * @return
          */
         int rand_roulette_pos(prefix_t &prefix, bool allow_terminal);
-
 
         /**
          * get the index of subtree
@@ -226,13 +208,11 @@ namespace cusr {
          */
         pair<int, int> get_subtree_index(prefix_t &prefix, int start_pos);
 
-
         /**
          * probability to gen random constant
          * @param p_const
          */
         void set_constant_prob(float p_const);
-
 
         /**
          * set seed using times

@@ -10,9 +10,8 @@ vector<float> real_value;
 
 
 void gen_dataset() {
-    // The size of the dataset must be divisible by 512 currently
     cout << "gen dataset" << endl;
-    for (int i = 0; i < 12345; i++) {
+    for (int i = 0; i < 2048 * 2048; i++) {
         float x0 = cusr::program::gen_rand_float(-5, 5);
         float x1 = cusr::program::gen_rand_float(-5, 5);
         dataset.push_back({x0, x1});
@@ -25,7 +24,7 @@ void gen_dataset() {
 int main() {
     gen_dataset();
     cusr::RegressionEngine reg;
-    reg.function_set = { _add, _cos, _sub, _div, _tan, _mul, _sin };
+    reg.function_set = {ADD, COS, SUB, DIV, TAN, MUL, SIN };
     reg.use_gpu = true;            // performing GPU acceleration -- much faster than CPU
     reg.max_program_depth = 10;    // better less than 20 --
                                    // or may cause overflow due to the limitation of the length of prefix (less than 2048)
