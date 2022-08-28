@@ -2,7 +2,7 @@
 
 ------
 
-![](./images/speeding_up_using_gpus.png)
+![](https://github.com/RayZhhh/cusr/blob/master/images/speeding_up_using_gpus.png)
 
 ------
 
